@@ -1,8 +1,10 @@
 package com.example.myapplication.screens
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -24,8 +26,11 @@ fun filterCarsBySearch(carList: List<Car>, searchText: String): MutableList<Car>
     return returnList
 }
 
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @Composable
 fun CarsList() {
+    val selectedCarIndex = 0;
     val cars = remember {
         CarData.carList
     }

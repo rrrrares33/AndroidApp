@@ -1,9 +1,7 @@
 package com.example.myapplication.navigation
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -14,8 +12,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.myapplication.R
+import com.example.myapplication.screens.AnimationPage
 import com.example.myapplication.screens.Favorite
 import com.example.myapplication.screens.Photo
+import com.example.myapplication.screens.Video
 
 
 @Composable
@@ -23,7 +23,9 @@ fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
         NavigationItem.Home,
         NavigationItem.List,
-        NavigationItem.Favorite
+        NavigationItem.Favorite,
+        NavigationItem.Video,
+        NavigationItem.Animation
     )
     BottomNavigation(
         backgroundColor = colorResource(id = R.color.black),
@@ -55,6 +57,8 @@ fun BottomNavigationBar(navController: NavHostController) {
     }
 }
 
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
 @Composable
 fun Navigation(navController: NavHostController) {
     NavHost(navController, startDestination = NavigationItem.Home.route) {
@@ -66,6 +70,12 @@ fun Navigation(navController: NavHostController) {
         }
         composable(NavigationItem.Favorite.route) {
             Favorite()
+        }
+        composable(NavigationItem.Video.route) {
+            Video()
+        }
+        composable(NavigationItem.Animation.route) {
+            AnimationPage()
         }
     }
 }

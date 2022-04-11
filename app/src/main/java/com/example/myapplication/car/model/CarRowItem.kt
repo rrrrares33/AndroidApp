@@ -1,32 +1,50 @@
 package com.example.myapplication.car.model
 
 import android.content.Intent
+import androidx.compose.animation.*
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @Composable
 fun CarRowItem(car: Car) {
+    var currentColorIsGreen by remember { mutableStateOf(true) }
     val context = LocalContext.current
+    val transition = updateTransition(targetState = currentColorIsGreen, label = "")
+    val color by transition.animateColor(label = "", transitionSpec = {
+       tween(3000)
+    }) { state ->
+        when (state) {
+            true -> Green
+            false -> Color.Cyan
+        }
+    }
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 8.dp)
             .fillMaxWidth(),
         elevation = 2.dp,
-        backgroundColor = Color.White,
-        shape = RoundedCornerShape(corner = androidx.compose.foundation.shape.CornerSize(16.dp))
-
+        backgroundColor = color,
+        shape = RoundedCornerShape(corner = androidx.compose.foundation.shape.CornerSize(16.dp)),
+        onClick = {
+            currentColorIsGreen = !currentColorIsGreen;
+        }
     ) {
         Row {
             Column(
@@ -45,9 +63,12 @@ fun CarRowItem(car: Car) {
                 )
             }
             Column(
-                modifier = Modifier.fillMaxHeight()
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
             ) {
                 IconButton(
+                    modifier = Modifier.align(Alignment.End),
                     onClick = {
                         val sendIntent: Intent = Intent().apply {
                             action = Intent.ACTION_SEND
