@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -57,6 +58,7 @@ fun BottomNavigationBar(navController: NavHostController) {
     }
 }
 
+@OptIn(ExperimentalMotionApi::class)
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
